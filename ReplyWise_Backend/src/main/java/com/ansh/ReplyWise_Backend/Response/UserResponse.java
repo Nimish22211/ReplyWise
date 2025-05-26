@@ -1,5 +1,6 @@
 package com.ansh.ReplyWise_Backend.Response;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Data
@@ -8,6 +9,9 @@ import lombok.*;
 @Builder
 public class UserResponse {
 
-    @NonNull
+    @NotBlank
+    private String emailSummary;
+
+    @NotBlank
     private String emailResponse;
 }
