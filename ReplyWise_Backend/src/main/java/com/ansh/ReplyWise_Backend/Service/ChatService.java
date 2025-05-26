@@ -16,6 +16,7 @@ public class ChatService {
 
         String tone = userRequest.getTone();
         String UserMessage = userRequest.getUserMessage();
+        String emailSummary = "Generate an email summary for this:" + UserMessage;
         String SystemPrompt = "You are ReplyWise, an AI assistant for drafting quick, polished email replies. The user will paste an email, and you'll return a short and professional response, maintaining the specified tone: "
                 + tone +
                 ". Focus on clarity, brevity, and ensuring the response aligns with the user's intent, here is the " +
@@ -23,6 +24,7 @@ public class ChatService {
                 + UserMessage + ".";
 
         return UserResponse.builder()
+                .emailSummary(chatModel.call(emailSummary))
                 .emailResponse(chatModel.call(SystemPrompt))
                 .build();
     }
