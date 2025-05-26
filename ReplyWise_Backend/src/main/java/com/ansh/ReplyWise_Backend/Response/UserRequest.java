@@ -1,5 +1,6 @@
 package com.ansh.ReplyWise_Backend.Response;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,9 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class UserRequest {
 
-    @NonNull
+    @NotBlank
     private String UserMessage;
 
-    @NonNull
+    @NotBlank
     private String tone;
 }
