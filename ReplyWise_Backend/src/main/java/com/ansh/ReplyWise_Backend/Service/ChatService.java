@@ -1,5 +1,6 @@
 package com.ansh.ReplyWise_Backend.Service;
 
+import com.ansh.ReplyWise_Backend.Exceptions.CustomExeptions.ApiCallException;
 import com.ansh.ReplyWise_Backend.Response.UserRequest;
 import com.ansh.ReplyWise_Backend.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,14 @@ public class ChatService {
                 "email: "
                 + UserMessage + ".";
 
-        return UserResponse.builder()
-                .emailSummary(chatModel.call(emailSummary))
-                .emailResponse(chatModel.call(SystemPrompt))
-                .build();
+        try {
+            return UserResponse.builder()
+                    .emailSummary(chatModel.call(emailSummary))
+                    .emailResponse(chatModel.call(SystemPrompt))
+                    .build();
+
+        }catch (Exception e){
+            throw new ApiCallException(e.getMessage());
+        }
     }
 }
