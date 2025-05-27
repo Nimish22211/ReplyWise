@@ -22,6 +22,11 @@ public class ChatController {
     @PostMapping
     public ResponseEntity<UserResponse> getMessage(@Valid @RequestBody UserRequest userRequest){
 
+        System.out.println("=== BACKEND DEBUG ===");
+        System.out.println("Received UserRequest: " + userRequest);
+        System.out.println("UserMessage: " + userRequest.getUserMessage());
+        System.out.println("Tone: " + userRequest.getTone());
+
         try {
             return new ResponseEntity<>(service.getEmailReply(userRequest), HttpStatus.OK);
         }catch (Exception e){
