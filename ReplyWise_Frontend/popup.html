@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=400, initial-scale=1.0">
+    <title>ReplyWise</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional inline styles to ensure proper sizing */
+        html, body {
+            width: 400px !important;
+            min-width: 400px !important;
+            max-width: 400px !important;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>📧 ReplyWise</h1>
+        <p>Generate smart email responses with AI</p>
+    </header>
+
+    <form id="emailForm">
+        <div class="form-group">
+            <label for="emailContent">Email Content:</label>
+            <textarea
+                    id="emailContent"
+                    placeholder="Paste the email you received here..."
+                    rows="6"
+                    required
+            ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="toneSelect">Response Tone:</label>
+            <select id="toneSelect" required>
+                <option value="">Choose a tone...</option>
+                <option value="professional">Professional</option>
+                <option value="friendly">Friendly</option>
+                <option value="apologetic">Apologetic</option>
+                <option value="enthusiastic">Enthusiastic</option>
+                <option value="formal">Formal</option>
+                <option value="casual">Casual</option>
+            </select>
+        </div>
+
+        <button type="submit" id="generateBtn">
+            <span id="btnText">Generate Response</span>
+            <span id="loader" class="loader hidden">⏳</span>
+        </button>
+    </form>
+
+    <div id="results" class="results hidden">
+        <div class="result-section">
+            <h3>📝 Email Summary</h3>
+            <div id="summaryOutput" class="output-box"></div>
+        </div>
+
+        <div class="result-section">
+            <h3>💬 Suggested Response</h3>
+            <div id="responseOutput" class="output-box"></div>
+            <button id="copyBtn" class="copy-btn">📋 Copy Response</button>
+        </div>
+    </div>
+
+    <div id="error" class="error hidden">
+        <p id="errorMessage"></p>
+        <button id="retryBtn" class="retry-btn">Try Again</button>
+    </div>
+
+    <footer>
+        <div class="status" id="status">Ready</div>
+    </footer>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
