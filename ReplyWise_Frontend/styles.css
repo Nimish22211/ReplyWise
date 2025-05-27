@@ -10,7 +10,7 @@ body {
     font-size: 14px;
     line-height: 1.5;
     color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: white; /* Ensures no purple sidebar from body gradient */
     min-height: 600px;
     width: 400px;
     min-width: 400px;
