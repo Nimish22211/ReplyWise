@@ -4,6 +4,7 @@ import com.ansh.ReplyWise_Backend.Exceptions.CustomExeptions.ApiCallException;
 import com.ansh.ReplyWise_Backend.Response.UserRequest;
 import com.ansh.ReplyWise_Backend.Response.UserResponse;
 import com.ansh.ReplyWise_Backend.Service.ChatService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/openai")
 @RequiredArgsConstructor
+@Tag(name = "ChatController")
 @CrossOrigin("*")
 public class ChatController {
 
