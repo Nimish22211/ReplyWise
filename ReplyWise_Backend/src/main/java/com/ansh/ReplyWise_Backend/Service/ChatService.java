@@ -17,10 +17,12 @@ public class ChatService {
 
         String tone = userRequest.getTone();
         String UserMessage = userRequest.getUserMessage();
-        String emailSummary = "Generate an email summary for this:" + UserMessage;
-        String SystemPrompt = "You are ReplyWise, an AI assistant for drafting quick, polished email replies. The user will paste an email, and you'll return a short and professional response, maintaining the specified tone: "
+        String emailSummary = "Summarize the following email into a single, coherent paragraph that captures the key points, tone, and intent without simply repeating the email. " +
+                "Ensure the summary is clear, concise, and maintains the original message’s essence." +
+                " Avoid listing individual bullet points—integrate all relevant details naturally within the paragraph:" + UserMessage;
+        String SystemPrompt = "You are ReplyWise, an AI assistant for drafting quick, polished email replies. The user will paste an email, and you'll return a response, maintaining the specified tone: "
                 + tone +
-                ". Focus on clarity, brevity, and ensuring the response aligns with the user's intent, here is the " +
+                ". Focus on clarity, brevity, and ensuring the response aligns with the user's intent, and tone specifed, here is the " +
                 "email: "
                 + UserMessage + ".";
 
