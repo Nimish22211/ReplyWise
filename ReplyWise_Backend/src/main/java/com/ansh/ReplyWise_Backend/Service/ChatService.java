@@ -19,8 +19,8 @@ import static com.ansh.ReplyWise_Backend.Response.PromptFormat.getPromptTemplate
 @RequiredArgsConstructor
 public class ChatService {
 
-    private ChatModel chatModel;
-    private PromptFormat promptTemplate;
+    private final ChatModel chatModel;
+    private final PromptFormat promptTemplate;
 
     public UserResponse getEmailReply(UserRequest userRequest) {
 
