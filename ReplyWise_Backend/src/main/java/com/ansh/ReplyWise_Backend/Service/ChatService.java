@@ -1,39 +1,49 @@
 package com.ansh.ReplyWise_Backend.Service;
 
 import com.ansh.ReplyWise_Backend.Exceptions.CustomExeptions.ApiCallException;
+import com.ansh.ReplyWise_Backend.Response.PromptFormat;
 import com.ansh.ReplyWise_Backend.Response.UserRequest;
 import com.ansh.ReplyWise_Backend.Response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+
+import static com.ansh.ReplyWise_Backend.Response.PromptFormat.getPromptTemplate;
 
 @Service
 @RequiredArgsConstructor
 public class ChatService {
 
-    private final ChatModel chatModel;
+    private ChatModel chatModel;
+    private PromptFormat promptTemplate;
 
-    public UserResponse getEmailReply(UserRequest userRequest){
+    public UserResponse getEmailReply(UserRequest userRequest) {
 
         String tone = userRequest.getTone();
-        String UserMessage = userRequest.getUserMessage();
-        String emailSummary = "Summarize the following email into a single, coherent paragraph that captures the key points, tone, and intent without simply repeating the email. " +
-                "Ensure the summary is clear, concise, and maintains the original message’s essence." +
-                " Avoid listing individual bullet points—integrate all relevant details naturally within the paragraph:" + UserMessage;
-        String SystemPrompt = "You are ReplyWise, an AI assistant for drafting quick, polished email replies. The user will paste an email, and you'll return a response, maintaining the specified tone: "
-                + tone +
-                ". Focus on clarity, brevity, and ensuring the response aligns with the user's intent, and tone specifed, here is the " +
-                "email: "
-                + UserMessage + ".";
+        String userMessage = userRequest.getUserMessage();
 
         try {
-            return UserResponse.builder()
-                    .emailSummary(chatModel.call(emailSummary))
-                    .emailResponse(chatModel.call(SystemPrompt))
-                    .build();
+            BeanOutputConverter<UserResponse> outputConverter = new BeanOutputConverter<>(UserResponse.class);
 
-        }catch (Exception e){
-            throw new ApiCallException(e.getMessage());
+            PromptTemplate promptTemplate = getPromptTemplate();
+
+            Prompt prompt = promptTemplate.create(Map.of(
+                    "tone", tone,
+                    "userMessage", userMessage,
+                    "format", outputConverter.getFormat()
+            ));
+
+            String response = chatModel.call(prompt).getResult().getOutput().getText();
+
+            return outputConverter.convert(response);
+
+        } catch (Exception e) {
+            throw new ApiCallException("Failed to generate email response: " + e.getMessage());
         }
     }
 }
