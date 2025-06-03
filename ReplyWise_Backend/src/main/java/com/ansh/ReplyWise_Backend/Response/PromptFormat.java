@@ -2,7 +2,6 @@ package com.ansh.ReplyWise_Backend.Response;
 
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class PromptFormat {
