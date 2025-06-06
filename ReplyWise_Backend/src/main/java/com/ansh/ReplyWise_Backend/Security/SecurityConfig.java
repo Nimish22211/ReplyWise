@@ -26,8 +26,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll() // Secure this path
-                        .anyRequest().authenticated() // Block other paths by default
+                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/health").permitAll()
+                        .anyRequest().authenticated()
                 )
 
                 .addFilterBefore(rateLimitFilter, AuthorizationFilter.class);
