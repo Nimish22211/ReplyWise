@@ -16,11 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class RateLimitFilter implements Filter {
 
-    // Maps each IP to its bucket
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
 
     private Bucket newBucket() {
-        // Allow 20 requests per minute per IP
         return Bucket4j.builder()
                 .addLimit(Bandwidth.classic(20, Refill.greedy(20, Duration.ofMinutes(1))))
                 .build();
