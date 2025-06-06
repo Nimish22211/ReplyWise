@@ -1,59 +1,71 @@
-# 📬 ReplyWise – AI-Powered Email Reply Generator
+# ReplyWise 🚀
 
-**ReplyWise** is an intelligent email reply assistant powered by AI. It helps users quickly generate context-aware email responses with a single click — saving time and improving productivity.
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)
+![Tech](https://img.shields.io/badge/tech-Spring_Boot_&_JS-orange)
+
+ReplyWise is an intelligent browser extension that acts as your personal email assistant. It leverages the power of AI to generate concise summaries of incoming emails and craft well-written responses in various tones, streamlining your communication workflow.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-- ✨ AI-generated email replies using LLMs (e.g. OpenAI, Spring AI)
-- 🧠 Context-aware prompt engineering
-- 📩 Chrome extension for Gmail (planned)
-- ⚙️ Spring Boot backend for secure API handling
-- 📦 Clean, scalable architecture (feature-based)
+*   **📧 Instant Email Summaries:** Quickly grasp the key points of long or complex emails without reading every word.
+*   **🤖 AI-Powered Responses:** Generate thoughtful and context-aware replies in seconds.
+*   **🎯 Customizable Tones:** Adapt your response to any situation by choosing from multiple tones like Professional, Friendly, Formal, and more.
+*   **🔒 Privacy-Focused:** Your email content is processed to generate a response but is **never stored** on our servers.
+*   **⚡️ Sleek & Simple UI:** A clean, intuitive interface designed for speed and ease of use.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Java 21, Spring Boot 3.x, Spring AI
-- **Frontend (planned):** React + Tailwind / Next.js
-- **Auth (optional):** Keycloak
-- **AI Service:** OpenAI via Spring AI
-- **Deployment:** Render / Netlify / Vercel
+This project is a full-stack application composed of a backend service and a browser extension frontend.
+
+| Component         | Technology                                                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Backend**       | **Java 21**, **Spring Boot 3**, **Spring Security**, **Spring AI**, **Bucket4j** (for Rate Limiting)            |
+| **Frontend**      | **Vanilla JavaScript (ES6+)**, **HTML5**, **CSS3**                                                            |
+| **AI Provider**   | **OpenAI API**                                                                                              |
+| **Deployment**    | The backend service is deployed on **Render**.                                                              |
 
 ---
 
-## 📌 Project Status
+## 📦 Installation
 
-Currently in active development.
+The extension is currently under review by Mozilla. Once approved, you will be able to install it directly from the Firefox Browser ADD-ONS store:
 
----
-
-## 📚 Upcoming Milestones
-
-- [ ] Email context ingestion + summarization
-- [ ] Prompt tuning for different tones (formal, friendly, direct)
-- [ ] Chrome extension UI
-- [ ] Backend deployment (Spring Boot REST API)
-- [ ] Integration with Gmail APIs (optional)
+**[Link to Firefox Add-on Store will go here once approved]**
 
 ---
 
-## 🧠 Inspiration
+## 🔧 Development Setup
 
-Built out of a personal pain point — writing repetitive professional emails. The goal is to make communication *faster, smarter,* and *less mentally taxing* for developers, students, and professionals alike.
+Interested in running the project locally? Here’s how to get it set up.
 
----
+### Prerequisites
 
-## 🤝 Contributing
+*   Java JDK 21
+*   Apache Maven
+*   An OpenAI API Key
+*   Firefox Browser
 
-Open to collaborations after the MVP is complete. Feel free to open issues or drop suggestions.
+### 1. Backend Setup
 
----
+The backend is a standard Spring Boot application.
 
-## 📬 Contact
+```bash
+# Clone the repository
+git clone https://github.com/your-username/ReplyWise.git
+cd ReplyWise/ReplyWise_Backend
 
-**Anshpreet Singh**  
-Connect on [LinkedIn](https://www.linkedin.com/in/anshpreet-singh-03855a31a/)  
+# Create your local configuration file
+# Copy the example file
+cp src/main/resources/application.properties.example src/main/resources/application.properties
 
+# Now, edit src/main/resources/application.properties and add your OpenAI API key
+# openai.api.key=sk-YOUR_SECRET_OPENAI_KEY
+
+# Build and run the application
+mvn clean install
+mvn spring-boot:run
