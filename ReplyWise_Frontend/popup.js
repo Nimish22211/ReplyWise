@@ -16,7 +16,7 @@ const status = document.getElementById('status');
 const statusIndicator = document.querySelector('.status-indicator');
 
 // Configuration
-const API_URL = 'http://localhost:8080/api/openai';
+const API_URL = 'https://replywise-8zw4.onrender.com/api/openai';
 
 // State management
 let currentResponse = '';
@@ -258,35 +258,50 @@ function updateStatus(message, type = 'default') {
 async function copyToClipboard() {
     if (!currentResponse) return;
 
-    const originalContent = copyBtn.innerHTML;
+    // Get the original button structure
+    const originalIcon = copyBtn.querySelector('svg');
+    const originalText = copyBtn.lastChild.textContent.trim();
 
     try {
         await navigator.clipboard.writeText(currentResponse);
 
-        // Enhanced success feedback
-        copyBtn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Copied!
-        `;
+        // Create success icon (checkmark)
+        const successIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        successIcon.setAttribute('width', '14');
+        successIcon.setAttribute('height', '14');
+        successIcon.setAttribute('viewBox', '0 0 24 24');
+        successIcon.setAttribute('fill', 'none');
+
+        const checkPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        checkPath.setAttribute('d', 'M20 6L9 17L4 12');
+        checkPath.setAttribute('stroke', 'currentColor');
+        checkPath.setAttribute('stroke-width', '2');
+        checkPath.setAttribute('stroke-linecap', 'round');
+        checkPath.setAttribute('stroke-linejoin', 'round');
+
+        successIcon.appendChild(checkPath);
+
+        // Replace icon and text
+        copyBtn.replaceChild(successIcon, originalIcon);
+        copyBtn.lastChild.textContent = ' Copied!';
         copyBtn.classList.add('copied');
         updateStatus('Response copied to clipboard', 'success');
 
         // Reset button after 2.5 seconds
         setTimeout(() => {
-            copyBtn.innerHTML = originalContent;
+            copyBtn.replaceChild(originalIcon, copyBtn.querySelector('svg'));
+            copyBtn.lastChild.textContent = ' ' + originalText;
             copyBtn.classList.remove('copied');
         }, 2500);
 
     } catch (error) {
         console.error('Failed to copy to clipboard:', error);
-        fallbackCopyToClipboard(currentResponse, originalContent);
+        fallbackCopyToClipboard(currentResponse, originalIcon, originalText);
     }
 }
 
 // Enhanced fallback copy method
-function fallbackCopyToClipboard(text, originalContent) {
+function fallbackCopyToClipboard(text, originalIcon, originalText) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     textArea.style.position = 'fixed';
@@ -297,17 +312,31 @@ function fallbackCopyToClipboard(text, originalContent) {
     try {
         document.execCommand('copy');
 
-        copyBtn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Copied!
-        `;
+        // Create success icon (checkmark) for fallback
+        const successIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        successIcon.setAttribute('width', '14');
+        successIcon.setAttribute('height', '14');
+        successIcon.setAttribute('viewBox', '0 0 24 24');
+        successIcon.setAttribute('fill', 'none');
+
+        const checkPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        checkPath.setAttribute('d', 'M20 6L9 17L4 12');
+        checkPath.setAttribute('stroke', 'currentColor');
+        checkPath.setAttribute('stroke-width', '2');
+        checkPath.setAttribute('stroke-linecap', 'round');
+        checkPath.setAttribute('stroke-linejoin', 'round');
+
+        successIcon.appendChild(checkPath);
+
+        // Replace icon and text
+        copyBtn.replaceChild(successIcon, copyBtn.querySelector('svg'));
+        copyBtn.lastChild.textContent = ' Copied!';
         copyBtn.classList.add('copied');
         updateStatus('Response copied to clipboard', 'success');
 
         setTimeout(() => {
-            copyBtn.innerHTML = originalContent;
+            copyBtn.replaceChild(originalIcon, copyBtn.querySelector('svg'));
+            copyBtn.lastChild.textContent = ' ' + originalText;
             copyBtn.classList.remove('copied');
         }, 2500);
     } catch (error) {
